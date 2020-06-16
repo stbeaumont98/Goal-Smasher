@@ -7,12 +7,48 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="630dp"
+        android:text="GOAL SMASHER APP!"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/createYourGoal"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginBottom="24dp"
+        android:text="Create a Goal"
+        app:layout_constraintBottom_toTopOf="@+id/viewYourCalendar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/viewYourCalendar"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="24dp"
+        android:text="View Calendar"
+        app:layout_constraintBottom_toTopOf="@+id/checkProgressGoal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/checkProgressGoal"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="200dp"
+        android:text="Check Progress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,16 @@
-package team04.goalsmasher;
+package team04.goalsmasher.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class showGoalProgress extends AppCompatActivity {
+import team04.goalsmasher.R;
+
+public class CalendarEventSchedule extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_goal_progress);
+        setContentView(R.layout.activity_calendar_event_schedule);
     }
 }

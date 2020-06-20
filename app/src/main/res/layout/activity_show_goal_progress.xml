@@ -5,7 +5,7 @@
     android:id="@+id/showGoalProgress"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".showGoalProgress">
+    tools:context=".controller.ShowGoalProgress">
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -11,7 +11,7 @@ public class StoreData {
         String goalJson = gson.toJson(goalList);
     }
 
-    //this is assuming we are storing a list of goals
+    //this is assuming we are storing a list of goals. practice git.
     public ArrayList<GoalSmasherModel> loadData() {
         ArrayList<GoalSmasherModel> goalList = new ArrayList<>();
         return goalList;

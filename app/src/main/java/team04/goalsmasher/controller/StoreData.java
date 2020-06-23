@@ -1,4 +1,4 @@
-package team04.goalsmasher;
+package team04.goalsmasher.controller;
 
 import com.google.gson.Gson;
 

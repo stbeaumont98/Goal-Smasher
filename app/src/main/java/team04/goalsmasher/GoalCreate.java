@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class createGoalActivity extends AppCompatActivity {
+public class GoalCreate extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,29 +25,36 @@ public class StoreData {
 
     /* saveData: This method converts the users data to a json
      * string and saves the data to internal storage */
-    public void saveData(ArrayList<GoalSmasherModel> goalList) throws IOException {
+    public void saveData(ArrayList<GoalSmasherModel> goalList) {
         String goalJson = gson.toJson(goalList);
 
-        FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
-        fos.write(goalJson.getBytes());
-        fos.close();
-
+        try {
+            FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            fos.write(goalJson.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /* loadData: Loads the users data from internal storage
      * this is assuming we are storing a list of goals */
-    public ArrayList<GoalSmasherModel> loadData() throws IOException {
-        ArrayList<GoalSmasherModel> goalList;
+    public ArrayList<GoalSmasherModel> loadData() {
+        ArrayList<GoalSmasherModel> goalList = new ArrayList<>();
 
-        FileInputStream fis = context.openFileInput(filename);
-        Scanner scanner = new Scanner(fis);
-        scanner.useDelimiter("\\Z");
-        String content = scanner.next();
-        scanner.close();
-        fis.close();
+        try {
+            FileInputStream fis = context.openFileInput(filename);
+            Scanner scanner = new Scanner(fis);
+            scanner.useDelimiter("\\Z");
+            String content = scanner.next();
+            scanner.close();
+            fis.close();
 
-        Type listType = new TypeToken<ArrayList<GoalSmasherModel>>(){}.getType();
-        goalList = gson.fromJson(content, listType);
+            Type listType = new TypeToken<ArrayList<GoalSmasherModel>>(){}.getType();
+            goalList = gson.fromJson(content, listType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return goalList;
     }

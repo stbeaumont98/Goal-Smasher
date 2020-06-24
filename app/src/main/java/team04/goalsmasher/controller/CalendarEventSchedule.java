@@ -26,7 +26,7 @@ public class CalendarEventSchedule extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String date = (year) + "/" + month + 1 + "/" + dayOfMonth;
+                String date = (year) + "/" + (int)(month + 1) + "/" + dayOfMonth;
                 calendarGoals.setText(date);
             }
         });

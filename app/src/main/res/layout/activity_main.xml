@@ -21,32 +21,31 @@
         android:id="@+id/createYourGoal"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="128dp"
         android:text="Create a Goal"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/viewYourCalendar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMain" />
 
     <Button
         android:id="@+id/viewYourCalendar"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:text="View Calendar"
-        app:layout_constraintBottom_toTopOf="@+id/checkProgressGoal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createYourGoal" />
 
     <Button
         android:id="@+id/checkProgressGoal"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="300dp"
+        android:layout_marginTop="16dp"
         android:text="Check Progress"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewYourCalendar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

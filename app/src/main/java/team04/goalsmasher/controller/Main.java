@@ -18,6 +18,7 @@ public class Main extends AppCompatActivity {
 
         Button calendarEventScheduleView = findViewById(R.id.viewYourCalendar);
         Button showGoalProgressView = findViewById(R.id.checkProgressGoal);
+        Button createYourGoal = findViewById(R.id.createYourGoal);
 
         calendarEventScheduleView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +33,13 @@ public class Main extends AppCompatActivity {
                 openShowGoalProgressView();
             }
         });
+
+        createYourGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openGoalCreate();
+            }
+        });
     }
 
     public void openCalendarEventScheduleView() {
@@ -41,6 +49,11 @@ public class Main extends AppCompatActivity {
 
     public void openShowGoalProgressView() {
         Intent intent = new Intent(this, ShowGoalProgress.class);
+        startActivity(intent);
+    }
+
+    public void openGoalCreate() {
+        Intent intent = new Intent(this, GoalCreate.class);
         startActivity(intent);
     }
 }

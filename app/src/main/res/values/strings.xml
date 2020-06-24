@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Goal Smasher</string>
+    <string name="enter_goal">Enter Goal</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="set_goal">Set Goal</string>
+    <string name="cancel">Cancel</string>
 </resources>

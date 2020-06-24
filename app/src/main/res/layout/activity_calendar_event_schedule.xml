@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/calendarEventSchedule"
+    android:background="@color/colorPrimaryDark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controller.CalendarEventSchedule">
@@ -12,6 +13,7 @@
         android:layout_width="344dp"
         android:layout_height="312dp"
         android:layout_marginTop="24dp"
+        android:background="@drawable/bg_callendar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,11 +29,15 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textViewCalendar"
+        android:id="@+id/calendarGoals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="Your calendar and Goals:"
+        android:textColorHighlight="#E8E7E7"
+        android:textColorLink="#FFF"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="71dp"
-        tools:layout_editor_absoluteY="349dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

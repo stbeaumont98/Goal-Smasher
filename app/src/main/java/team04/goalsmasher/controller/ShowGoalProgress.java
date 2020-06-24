@@ -1,10 +1,12 @@
-package team04.goalsmasher;
+package team04.goalsmasher.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class showGoalProgress extends AppCompatActivity {
+import team04.goalsmasher.R;
+
+public class ShowGoalProgress extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

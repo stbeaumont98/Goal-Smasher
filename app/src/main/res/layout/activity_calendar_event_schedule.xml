@@ -5,7 +5,7 @@
     android:id="@+id/calendarEventSchedule"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".calendarEventSchedule">
+    tools:context=".controller.CalendarEventSchedule">
 
     <CalendarView
         android:id="@+id/calendarView"

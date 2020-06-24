@@ -5,17 +5,7 @@
     android:id="@+id/showGoalProgress"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".showGoalProgress">
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="350dp"
-        android:layout_height="293dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".controller.ShowGoalProgress">
 
     <TextView
         android:id="@+id/textViewProgress"

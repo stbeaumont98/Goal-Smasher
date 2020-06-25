@@ -5,4 +5,8 @@
     <string name="date">Date</string>
     <string name="set_goal">Set Goal</string>
     <string name="cancel">Cancel</string>
+    <string name="goal_smasher_app">GOAL SMASHER APP!</string>
+    <string name="create_a_goal">Create a Goal</string>
+    <string name="view_calendar">View Calendar</string>
+    <string name="check_progress">Check Progress</string>
 </resources>

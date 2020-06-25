@@ -43,14 +43,13 @@
         tools:layout_conversion_absoluteWidth="371dp" />
 
     <EditText
-        android:id="@+id/date"
+        android:id="@+id/datePicker"
         android:layout_width="147dp"
         android:layout_height="43dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
         android:focusable="false"
-        android:hint="@string/date"
-        android:inputType="date"
+        android:hint="Select Date"
         app:layout_constraintBottom_toTopOf="@+id/timePicker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

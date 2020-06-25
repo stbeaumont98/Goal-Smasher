@@ -3,13 +3,17 @@ package team04.goalsmasher.controller;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -25,7 +29,37 @@ public class GoalCreate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_goal);
-        mDisplayDate = (EditText) findViewById(R.id.datePicker);
+        final TimePicker picker = findViewById(R.id.timePicker);
+        picker.setIs24HourView(true);
+        Button btnGet = findViewById(R.id.set);
+        btnGet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hour, minute;
+                String am_pm;
+                hour = picker.getHour();
+                minute = picker.getMinute();
+                if(hour > 12) {
+                    am_pm = "PM";
+                    hour = hour - 12;
+                }
+                else
+                {
+                    am_pm="AM";
+                }
+                EditText g = findViewById(R.id.goal);
+                String goal = g.getText().toString();
+                EditText des = findViewById(R.id.des);
+                String description = des.getText().toString();
+                String time = hour +":"+ minute+" "+am_pm;
+                Context context = getApplicationContext();
+                CharSequence text = "Goal Set!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
+        mDisplayDate = (EditText) findViewById(R.id.date);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,5 +88,6 @@ public class GoalCreate extends AppCompatActivity {
         };
 
     }
-
+    public void cancel(View v){
+        finish(); }
 }

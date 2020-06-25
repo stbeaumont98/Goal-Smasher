@@ -70,7 +70,7 @@ public class GoalCreate extends AppCompatActivity {
                 int day = cal.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
                         GoalCreate.this,
-                        android.R.style.Widget_Holo_Light_ActionBar_Solid,
+                        android.R.style.Widget_Holo_Light_ActionBar,
                         mDateSetListener,
                         year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -80,7 +80,7 @@ public class GoalCreate extends AppCompatActivity {
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Log.d(TAG, "onDateSet: mm/dd/yyy:" + year + "/" + (int) (month + 1) + "/" + dayOfMonth);
+                Log.d(TAG, "onDateSet: mm/dd/yyy:" + month + "/" + dayOfMonth + "/" + year);
 
                 String date = month + "/" + dayOfMonth + "/" + year;
                 mDisplayDate.setText(date);
@@ -88,6 +88,8 @@ public class GoalCreate extends AppCompatActivity {
         };
 
     }
-    public void cancel(View v){
-        finish(); }
+
+    public void cancel (View v) {
+        finish();
+    }
 }

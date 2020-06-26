@@ -17,10 +17,15 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import team04.goalsmasher.R;
+import team04.goalsmasher.model.GoalSmasherModel;
 
 public class GoalCreate extends AppCompatActivity {
         final Calendar myCalendar = Calendar.getInstance();
         private EditText edittext;
+        private String goal;
+        private String description;
+        private String calDate;
+        private String time;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +57,20 @@ public class GoalCreate extends AppCompatActivity {
 
                                 //Info stored as a string
                                 EditText g = findViewById(R.id.goal);
-                                String goal = g.getText().toString();
+                                goal = g.getText().toString();
 
                                 EditText des = findViewById(R.id.des);
-                                String description = des.getText().toString();
+                                description = des.getText().toString();
 
                                 EditText d = findViewById(R.id.calenderPopup);
-                                String date = d.getText().toString();
+                                calDate = d.getText().toString();
 
-                                String time = hour +":"+ minute+" "+am_pm;
+                                time = hour +":"+ minute+" "+am_pm;
+
+                                //Allows the model to access this data
+                                GoalSmasherModel goalTest = new GoalSmasherModel(
+                                        goal, description, calDate, time,
+                                        true, 0 , Calendar.getInstance());
 
                                 //Toast
                                 Context context = getApplicationContext();

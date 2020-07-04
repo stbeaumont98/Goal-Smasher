@@ -1,4 +1,4 @@
-package team04.goalsmasher.controller;
+package team04.goalsmasher.model;
 
 import android.content.Context;
 
@@ -14,12 +14,12 @@ import java.util.Scanner;
 
 import team04.goalsmasher.model.GoalSmasherModel;
 
-public class StoreData {
+public class StoreDataModel {
     private Gson gson = new Gson();
     private String filename = "goal_data";
     private Context context;
 
-    public StoreData(Context context) {
+    public StoreDataModel(Context context) {
         this.context = context;
     }
 

@@ -10,30 +10,35 @@
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="344dp"
-        android:layout_height="312dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="330dp"
+        android:layout_height="290dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/calendar_corners"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewCalendar" />
 
     <ListView
-        android:layout_width="340dp"
-        android:layout_height="309dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:id="@+id/goalListView"
+        android:layout_width="330dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        app:layout_constraintVertical_bias="0.757" />
 
     <TextView
         android:id="@+id/textViewCalendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your calendar and Goals:"
-        android:textSize="24sp"
-        tools:layout_editor_absoluteX="73dp"
-        tools:layout_editor_absoluteY="349dp" />
+        android:layout_marginTop="16dp"
+        android:text="@string/your_calendar_and_goals"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

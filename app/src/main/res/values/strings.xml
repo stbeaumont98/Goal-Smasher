@@ -9,4 +9,6 @@
     <string name="create_a_goal">Create a Goal</string>
     <string name="view_calendar">View Calendar</string>
     <string name="check_progress">Check Progress</string>
+    <string name="your_calendar_and_goals">Your calendar and Goals:</string>
+    <string name="your_progress_and_goals">Your progress and Goals:</string>
 </resources>

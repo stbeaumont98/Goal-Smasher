@@ -13,11 +13,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 import team04.goalsmasher.R;
 import team04.goalsmasher.model.GoalSmasherModel;
+import team04.goalsmasher.model.StoreDataModel;
 
 public class GoalCreate extends AppCompatActivity {
         final Calendar myCalendar = Calendar.getInstance();
@@ -26,6 +28,8 @@ public class GoalCreate extends AppCompatActivity {
         private String description;
         private String calDate;
         private String time;
+        private StoreDataModel data = new StoreDataModel(this);
+        private ArrayList<GoalSmasherModel> list = new ArrayList<GoalSmasherModel>();
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +39,15 @@ public class GoalCreate extends AppCompatActivity {
                 final TimePicker picker = findViewById(R.id.timePicker);
                 picker.setIs24HourView(true);
 
-                //The Set Goal button saves the info inputted by the user
+                list = data.loadData();
+
+                // The Set Goal button saves the info inputted by the user
                 Button btnGet = findViewById(R.id.set);
                 btnGet.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                                //Gets the selected time from the user
+                                // Gets the selected time from the user
                                 int hour, minute;
                                 String am_pm;
                                 hour = picker.getHour();
@@ -55,7 +61,7 @@ public class GoalCreate extends AppCompatActivity {
                                         am_pm="AM";
                                 }
 
-                                //Info stored as a string
+                                // Info stored as a string
                                 EditText g = findViewById(R.id.goal);
                                 goal = g.getText().toString();
 
@@ -68,9 +74,14 @@ public class GoalCreate extends AppCompatActivity {
                                 time = hour +":"+ minute+" "+am_pm;
 
                                 //Allows the model to access this data
-                                GoalSmasherModel goalTest = new GoalSmasherModel(
+                                GoalSmasherModel goalData = new GoalSmasherModel(
                                         goal, description, calDate, time,
                                         true, 0 , Calendar.getInstance());
+
+                                // 07-03-2020 5:57 PM: Ellis, Saves the goal to the GoalSmasherModel there its saved to
+                                // storeData model
+                                list.add(goalData);
+                                data.saveData(list);
 
                                 //Toast
                                 Context context = getApplicationContext();

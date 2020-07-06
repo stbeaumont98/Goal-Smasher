@@ -30,9 +30,15 @@ public class GoalSmasherModel{
     public String getGoal() {
         return goal;
     }
-    public String getDesc() { return description; }
-    public String getDate() { return date; }
-    public String getTime() { return time; }
+    public String getDesc() {
+        return description;
+    }
+    public String getDate() {
+        return date;
+    }
+    public String getTime() {
+        return time;
+    }
     public boolean getCompletedGoal(){
         return completedGoal;
     }

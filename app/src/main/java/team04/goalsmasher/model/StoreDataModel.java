@@ -60,7 +60,22 @@ public class StoreDataModel {
         return goalList;
     }
 
-    public void clearData(){
 
+    /* clearData: Creates an empty ArrayList of items and overwrites
+    *  the old data
+    *  WARNING: Clears EVERYTHING saved; no goals survive this
+    *  If you want to delete a single goal, use goalList.remove(index)
+    *  to remove an item from the list and then call saveData(goalList) */
+    public void clearData(){
+        ArrayList<GoalSmasherModel> goalList = new ArrayList<>();
+        String emptyString = gson.toJson(goalList);
+
+        try {
+            FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            fos.write(emptyString.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

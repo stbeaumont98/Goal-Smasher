@@ -11,4 +11,7 @@
     <string name="check_progress">Check Progress</string>
     <string name="your_calendar_and_goals">Your calendar and Goals:</string>
     <string name="your_progress_and_goals">Your progress and Goals:</string>
+    <string name="back">back</string>
+    <string name="confirm">Confirm</string>
+    <string name="clear">Clear</string>
 </resources>

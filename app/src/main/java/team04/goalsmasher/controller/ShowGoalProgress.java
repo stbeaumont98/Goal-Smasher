@@ -4,8 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.SparseBooleanArray;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -15,7 +21,8 @@ import team04.goalsmasher.model.StoreDataModel;
 
 public class ShowGoalProgress extends AppCompatActivity {
 
-    private Context context;
+    Context context;
+    ProgressBar progressBarFooter;
     private StoreDataModel savedData = new StoreDataModel(this);
     private ArrayList<GoalSmasherModel> goalListItem = new ArrayList<GoalSmasherModel>();
     private ArrayList<String> items = new ArrayList<String>();
@@ -24,23 +31,54 @@ public class ShowGoalProgress extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_goal_progress);
-
         // 07-04-2020 12:20 AM: Ellis, Getting data from internal storage to get list of goals
         goalListItem = savedData.loadData();
+        context = ShowGoalProgress.this;
         // 07-04-2020 12:20 AM: Ellis, Looping through the list goals and adding to listView
         for (int i = 0; i < goalListItem.size(); i++) {
             items.add(goalListItem.get(i).getGoal());
         }
-        fileTextView();
+
+        setupListWithFooter();
+        progressBarFooter.setMax(goalListItem.size());
+        progressBarFooter.setProgress(0);
+        showProgressBar();
     }
 
-    private void fileTextView() {
-        // 07-04-2020 12:20 PM: Ellis, Custom listView using an adapter. It takes the goals_view layout
-        // and the arrayList
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                R.layout.goals_view, items);
+    public void setupListWithFooter() {
+        // Find the ListView
+        ListView goalListView = (ListView) findViewById(R.id.goalListView);
+        // Inflate the footer
+        View footer = getLayoutInflater().inflate(R.layout.activity_show_goal_progress, null);
+        // Find the progressbar within the footer
+        progressBarFooter = (ProgressBar) footer.findViewById(R.id.pbFooterLoading);
+        // Add footer to ListView
+        goalListView.addFooterView(footer);
+        // Set the adapter
+        goalListView.setAdapter(new CustomAdapter(items, context));
 
-        ListView entireListOfGoals = (ListView) findViewById(R.id.goalListView);
-        entireListOfGoals.setAdapter(arrayAdapter);
+    }
+
+    public void showProgressBar() {
+        progressBarFooter.setVisibility(View.VISIBLE);
+    }
+
+    public void confirm(View v){
+        Button button = (Button) findViewById(R.id.confirm);
+
+        int i = progressBarFooter.getProgress();
+        progressBarFooter.setProgress(i + 1);
+
+        if (i == progressBarFooter.getMax() - 1){
+            Context context = getApplicationContext();
+            CharSequence text = "You did it!";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+    }
+
+    public void clear(View v){
+
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,11 +13,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import team04.goalsmasher.model.GoalSmasherModel;
 
 public class StoreDataModel {
     private Gson gson = new Gson();
     private String filename = "goal_data";
+    private String goalJson;
     private Context context;
 
     public StoreDataModel(Context context) {
@@ -26,7 +27,7 @@ public class StoreDataModel {
     /* saveData: This method converts the users data to a json
      * string and saves the data to internal storage */
     public void saveData(ArrayList<GoalSmasherModel> goalList) {
-        String goalJson = gson.toJson(goalList);
+        goalJson = gson.toJson(goalList);
 
         try {
             FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
@@ -57,5 +58,9 @@ public class StoreDataModel {
         }
 
         return goalList;
+    }
+
+    public void clearData(){
+
     }
 }

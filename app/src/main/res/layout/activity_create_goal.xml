@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/time"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/gradient_background_color"
         android:orientation="vertical"
@@ -101,7 +101,7 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/design_buttons"
             android:onClick="cancel"
-            android:text="@string/cancel"
+            android:text="@string/back"
             android:textColor="#2980B9"
             app:layout_constraintBaseline_toBaselineOf="@+id/set"
             app:layout_constraintEnd_toEndOf="parent"

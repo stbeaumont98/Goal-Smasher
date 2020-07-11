@@ -1,17 +1,14 @@
 package team04.goalsmasher.controller;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -31,6 +28,15 @@ public class ShowGoalProgress extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_goal_progress);
+
+        Toolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null)
+            actionBar.setDisplayShowTitleEnabled(false);
+
         // 07-04-2020 12:20 AM: Ellis, Getting data from internal storage to get list of goals
         goalListItem = savedData.loadData();
         context = ShowGoalProgress.this;
@@ -40,6 +46,7 @@ public class ShowGoalProgress extends AppCompatActivity {
         }
 
         setupListWithFooter();
+        progressBarFooter.setScaleY(2f);
         progressBarFooter.setMax(goalListItem.size());
         progressBarFooter.setProgress(0);
         showProgressBar();
@@ -47,35 +54,19 @@ public class ShowGoalProgress extends AppCompatActivity {
 
     public void setupListWithFooter() {
         // Find the ListView
-        ListView goalListView = (ListView) findViewById(R.id.goalListView);
-        // Inflate the footer
-        View footer = getLayoutInflater().inflate(R.layout.activity_show_goal_progress, null);
+        ListView goalListView = findViewById(R.id.goalListView);
+
+
         // Find the progressbar within the footer
-        progressBarFooter = (ProgressBar) footer.findViewById(R.id.pbFooterLoading);
-        // Add footer to ListView
-        goalListView.addFooterView(footer);
+        progressBarFooter = findViewById(R.id.progressBar);
+
         // Set the adapter
-        goalListView.setAdapter(new CustomAdapter(items, context));
+        goalListView.setAdapter(new GoalProgressAdapter(items, context, progressBarFooter));
 
     }
 
     public void showProgressBar() {
         progressBarFooter.setVisibility(View.VISIBLE);
-    }
-
-    public void confirm(View v){
-        Button button = (Button) findViewById(R.id.confirm);
-
-        int i = progressBarFooter.getProgress();
-        progressBarFooter.setProgress(i + 1);
-
-        if (i == progressBarFooter.getMax() - 1){
-            Context context = getApplicationContext();
-            CharSequence text = "You did it!";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
     }
 
     public void clear(View v){

@@ -11,25 +11,26 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import team04.goalsmasher.R;
+import team04.goalsmasher.model.GoalSmasherModel;
 
-public class CustomAdapter extends BaseAdapter implements ListAdapter {
+public class GoalCalendarAdapter extends BaseAdapter implements ListAdapter {
 
-    private ArrayList<String> list;
+    private ArrayList<GoalSmasherModel> listGoals;
     private Context context;
 
-    public CustomAdapter(ArrayList<String> list, Context context) {
-        this.list = list;
+    public GoalCalendarAdapter(ArrayList<GoalSmasherModel> listGoals, Context context) {
+        this.listGoals = listGoals;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return listGoals.size();
     }
 
     @Override
     public Object getItem(int pos) {
-        return list.get(pos);
+        return listGoals.get(pos);
     }
 
     @Override
@@ -38,17 +39,18 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.goal_view_layout, null);
+            view = inflater.inflate(R.layout.calendar_list_item_layout, null);
         }
 
         //Handle TextView and display string from your list
         TextView viewGoal= view.findViewById(R.id.viewGoal);
-        viewGoal.setText((CharSequence) list.get(position));
+        viewGoal.setText((CharSequence) listGoals.get(position).getGoal());
 
         return view;
     }
+
 }

@@ -1,9 +1,12 @@
 package team04.goalsmasher.controller;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,101 +25,144 @@ import team04.goalsmasher.model.GoalSmasherModel;
 import team04.goalsmasher.model.StoreDataModel;
 
 public class GoalCreate extends AppCompatActivity {
-        final Calendar myCalendar = Calendar.getInstance();
-        private EditText edittext;
-        private String goal;
-        private String description;
-        private String calDate;
-        private String time;
-        private StoreDataModel data = new StoreDataModel(this);
-        private ArrayList<GoalSmasherModel> list = new ArrayList<GoalSmasherModel>();
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_create_goal);
-                edittext = findViewById(R.id.calenderPopup);
-                final TimePicker picker = findViewById(R.id.timePicker);
-                picker.setIs24HourView(true);
+    private Calendar myCalendar = Calendar.getInstance();
+    private EditText editTextGoal, editTextDescription, editTextDate;
+    private TimePicker timePicker;
+    private String goal;
+    private String description;
+    private String calDate;
+    private String time;
+    private StoreDataModel data = new StoreDataModel(this);
+    private ArrayList<GoalSmasherModel> list = new ArrayList<GoalSmasherModel>();
+    private int position;
 
-                list = data.loadData();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_goal);
 
-                // The Set Goal button saves the info inputted by the user
-                Button btnGet = findViewById(R.id.set);
-                btnGet.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+        Toolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
 
-                                // Gets the selected time from the user
-                                int hour, minute;
-                                String am_pm;
-                                hour = picker.getHour();
-                                minute = picker.getMinute();
-                                if(hour > 12) {
-                                        am_pm = "PM";
-                                        hour = hour - 12;
-                                }
-                                else
-                                {
-                                        am_pm="AM";
-                                }
+        ActionBar actionBar = getSupportActionBar();
 
-                                // Info stored as a string
-                                EditText g = findViewById(R.id.goal);
-                                goal = g.getText().toString();
+        if (actionBar != null)
+            actionBar.setDisplayShowTitleEnabled(false);
 
-                                EditText des = findViewById(R.id.des);
-                                description = des.getText().toString();
+        editTextGoal = findViewById(R.id.editTextGoal);
+        editTextDescription = findViewById(R.id.editTextDescription);
+        editTextDate = findViewById(R.id.editTextDate);
+        timePicker = findViewById(R.id.timePicker);
+        timePicker.setIs24HourView(true);
 
-                                EditText d = findViewById(R.id.calenderPopup);
-                                calDate = d.getText().toString();
+        list = data.loadData();
 
-                                time = hour +":"+ minute+" "+am_pm;
+        position = list.size();
 
-                                //Allows the model to access this data
-                                GoalSmasherModel goalData = new GoalSmasherModel(
-                                        goal, description, calDate, time,
-                                        true, 0 , Calendar.getInstance());
-
-                                // 07-03-2020 5:57 PM: Ellis, Saves the goal to the GoalSmasherModel there its saved to
-                                // storeData model
-                                list.add(goalData);
-                                data.saveData(list);
-
-                                //Toast
-                                Context context = getApplicationContext();
-                                CharSequence text = "Goal Set!";
-                                int duration = Toast.LENGTH_SHORT;
-                                Toast toast = Toast.makeText(context, text, duration);
-                                toast.show();
-                        }
-                });
-                edittext.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                                new DatePickerDialog(GoalCreate.this, date, myCalendar
-                                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                        }
-                });
-
+        // Checks if we are receiving any info on the intent
+        // and if so, populates the fields with the data
+        Intent i = getIntent();
+        if (i.hasExtra("pos")) {
+            position = i.getIntExtra("pos", list.size());
+            populateFields(position);
         }
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month,
-                                      int day) {
-                        myCalendar.set(Calendar.YEAR, year);
-                        myCalendar.set(Calendar.MONTH, month);
-                        myCalendar.set(Calendar.DAY_OF_MONTH, day);
-                        updateLabel();
+
+        // The Set Goal button saves the info inputted by the user
+        Button btnSetGoal = findViewById(R.id.set);
+
+        btnSetGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Gets the selected time from the user
+                int hour, minute;
+                String am_pm;
+                hour = timePicker.getHour();
+                minute = timePicker.getMinute();
+
+                myCalendar.set(Calendar.HOUR_OF_DAY, hour);
+                myCalendar.set(Calendar.MINUTE, minute);
+                if (hour > 12) {
+                    am_pm = "PM";
+                    hour = hour - 12;
+                } else {
+                    am_pm="AM";
                 }
-        };
-        public void cancel(View v){
+
+                // Info stored as a string
+                goal = editTextGoal.getText().toString();
+
+                description = editTextDescription.getText().toString();
+
+                calDate = editTextDate.getText().toString();
+
+                time = hour +":"+ minute+" "+am_pm;
+
+                //Allows the model to access this data
+                GoalSmasherModel goalData = new GoalSmasherModel(
+                    goal, description, calDate, time,
+                    true, 0 , myCalendar);
+
+                // if position is equal to the size of the list, then we are creating a new goal
+                if (position == list.size()) {
+                    list.add(goalData);
+                } else {
+                    list.set(position, goalData);
+                }
+                data.saveData(list);
+
+                //Toast
+                Context context = getApplicationContext();
+                CharSequence text = "Goal Set!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 finish();
+            }
+        });
+
+        editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(GoalCreate.this, date, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month,
+                      int day) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, day);
+            updateLabel();
         }
-        private void updateLabel() {
-                String myFormat = "MM/dd/yy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                edittext.setText(sdf.format(myCalendar.getTime()));
-        }
+    };
+
+    public void cancel(View v){
+        finish();
+    }
+
+    private void updateLabel() {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        editTextDate.setText(sdf.format(myCalendar.getTime()));
+    }
+    
+    public void populateFields(int position) {
+        GoalSmasherModel goal = list.get(position);
+        editTextGoal.setText(goal.getGoal());
+        editTextDescription.setText(goal.getDesc());
+        editTextDate.setText(goal.getDate());
+        int hour = goal.getCalendar().get(Calendar.HOUR_OF_DAY);
+        int min = goal.getCalendar().get(Calendar.MINUTE);
+        myCalendar.set(Calendar.HOUR_OF_DAY, hour);
+        timePicker.setHour(hour);
+        myCalendar.set(Calendar.MINUTE, min);
+        timePicker.setMinute(min);
+    }
 }

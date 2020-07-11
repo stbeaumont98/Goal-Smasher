@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background_color"
-    tools:context=".controller.Main">
+    tools:context=".controller.ManageGoalsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -28,46 +29,58 @@
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="16dp" />
 
+
     </androidx.appcompat.widget.Toolbar>
 
     <Button
-        android:id="@+id/btnManageGoals"
+        android:id="@+id/buttonCreateGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/design_buttons"
         android:padding="16dp"
-        android:text="@string/manage_goals"
+        android:text="@string/create_goal"
         android:textColor="#2980B9"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/viewYourCalendar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/buttonDeleteAll"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Button
-        android:id="@+id/viewYourCalendar"
+        android:id="@+id/buttonDeleteAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/design_buttons"
         android:padding="16dp"
-        android:text="@string/view_calendar"
+        android:text="@string/delete_all"
         android:textColor="#2980B9"
-        app:layout_constraintBottom_toTopOf="@+id/checkProgressGoal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonCreateGoal"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <Button
-        android:id="@+id/checkProgressGoal"
+    <TextView
+        android:id="@+id/textNoGoals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="128dp"
-        android:background="@drawable/design_buttons"
-        android:padding="16dp"
-        android:text="@string/check_progress"
-        android:textColor="#2980B9"
+        android:text="@string/no_goals"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/listManageGoals" />
 
+    <ListView
+        android:id="@+id/listManageGoals"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCreateGoal">
+
+    </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>

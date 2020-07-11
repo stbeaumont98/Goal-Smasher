@@ -1,6 +1,8 @@
 package team04.goalsmasher.controller;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,12 +18,20 @@ public class Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null)
+            actionBar.setDisplayShowTitleEnabled(false);
+
         // 06-16-2020 12:43 Ellis, Handles to navigation to other activities
         //
         Button calendarEventScheduleView = findViewById(R.id.viewYourCalendar);
         Button showGoalProgressView = findViewById(R.id.checkProgressGoal);
         // Nathaniel. Button for creating the goal.
-        Button createYourGoal = findViewById(R.id.createYourGoal);
+        Button manageGoals = findViewById(R.id.btnManageGoals);
 
         // 06-16-2020 12:43 Ellis, when clicked will go to calendar View.
         calendarEventScheduleView.setOnClickListener(new View.OnClickListener() {
@@ -39,10 +49,10 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        createYourGoal.setOnClickListener(new View.OnClickListener() {
+        manageGoals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGoalCreate();
+                openGoalManager();
             }
         });
     }
@@ -57,8 +67,8 @@ public class Main extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openGoalCreate() {
-        Intent intent = new Intent(this, GoalCreate.class);
+    public void openGoalManager() {
+        Intent intent = new Intent(this, ManageGoalsActivity.class);
         startActivity(intent);
     }
 }

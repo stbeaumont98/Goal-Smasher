@@ -4,7 +4,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,6 +85,7 @@ public class GoalCreate extends AppCompatActivity {
 
                 myCalendar.set(Calendar.HOUR_OF_DAY, hour);
                 myCalendar.set(Calendar.MINUTE, minute);
+                myCalendar.set(Calendar.SECOND, 0);
                 if (hour > 12) {
                     am_pm = "PM";
                     hour = hour - 12;
@@ -101,8 +104,8 @@ public class GoalCreate extends AppCompatActivity {
 
                 //Allows the model to access this data
                 GoalSmasherModel goalData = new GoalSmasherModel(
-                    goal, description, calDate, time,
-                    true, 0 , myCalendar);
+                        goal, description, calDate, time,
+                        true, 0 , myCalendar);
 
                 // if position is equal to the size of the list, then we are creating a new goal
                 if (position == list.size()) {
@@ -117,6 +120,7 @@ public class GoalCreate extends AppCompatActivity {
                 CharSequence text = "Goal Set!";
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
+                setAlert(myCalendar);
                 toast.show();
                 finish();
             }
@@ -126,8 +130,8 @@ public class GoalCreate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(GoalCreate.this, date, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
     }
@@ -135,7 +139,7 @@ public class GoalCreate extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month,
-                      int day) {
+                              int day) {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, month);
             myCalendar.set(Calendar.DAY_OF_MONTH, day);
@@ -152,7 +156,7 @@ public class GoalCreate extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editTextDate.setText(sdf.format(myCalendar.getTime()));
     }
-    
+
     public void populateFields(int position) {
         GoalSmasherModel goal = list.get(position);
         editTextGoal.setText(goal.getGoal());
@@ -164,5 +168,18 @@ public class GoalCreate extends AppCompatActivity {
         timePicker.setHour(hour);
         myCalendar.set(Calendar.MINUTE, min);
         timePicker.setMinute(min);
+    }
+
+    /* This sets a daily reminder on a given date provided by
+     * the Calendar variable */
+    public void setAlert(Calendar cal) {
+
+        Intent alertReceiver = new Intent(getApplicationContext(), AlertReceiver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alertReceiver, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
     }
 }

@@ -14,14 +14,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import team04.goalsmasher.R;
+import team04.goalsmasher.model.GoalSmasherModel;
 
+// Custom ListView adapter for our ShowGoalProgress activity
 public class GoalProgressAdapter extends BaseAdapter implements ListAdapter {
 
-    private ArrayList<String> list;
+    private ArrayList<GoalSmasherModel> list;
     private Context context;
     private ProgressBar progressBarFooter;
 
-    public GoalProgressAdapter(ArrayList<String> list, Context context, ProgressBar bar) {
+    public GoalProgressAdapter(ArrayList<GoalSmasherModel> list, Context context, ProgressBar bar) {
         this.list = list;
         this.context = context;
         this.progressBarFooter = bar;
@@ -50,11 +52,19 @@ public class GoalProgressAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.progress_list_item_layout, null);
         }
 
-        //Handle TextView and display string from your list
-        TextView viewGoal= view.findViewById(R.id.viewGoal);
-        viewGoal.setText((CharSequence) list.get(position));
 
+        // Get TextView from our layout and set the text to the name of the goal
+        TextView viewGoal= view.findViewById(R.id.viewGoal);
+        viewGoal.setText((CharSequence) list.get(position).getGoal());
+
+
+        // Get the Confirm Button from our layout so we can set the OnClickListener
         final Button buttonConfirm = view.findViewById(R.id.buttonConfirm);
+
+
+        /* When the "Confirm" button is clicked, it will disable the button
+         * at this position and increase the progress by one; if the
+         * progress bar is full, it displays a toast */
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

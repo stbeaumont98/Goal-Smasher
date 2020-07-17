@@ -2,11 +2,8 @@ package team04.goalsmasher.model;
 
 import java.util.Calendar;
 
-import team04.goalsmasher.controller.GoalCreate;
-
+// This is our custom java object used to store goal info
 public class GoalSmasherModel{
-    //06-16-2020 12:43 Ellis, our Model and business logic.
-    //06-16-2020 12:46 Ellis, simply added our values.
     private String goal;
     private String description;
     private String date;
@@ -15,7 +12,7 @@ public class GoalSmasherModel{
     private int progressTowardGoal;
     private Calendar calendar;
 
-    //06-16-2020 12:54 Ellis, constructor to set the values.
+    // Constructor
     public GoalSmasherModel(String goal, String description, String date, String time, boolean completedGoal, int progressTowardGoal,
                             Calendar calendar) {
         this.goal = goal;
@@ -26,7 +23,8 @@ public class GoalSmasherModel{
         this.progressTowardGoal = progressTowardGoal;
         this.calendar = calendar;
     }
-    //06-16-2020 12:54 Ellis, getting our values.
+
+    // Getters for GoalSmasherModel values
     public String getGoal() {
         return goal;
     }

@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -44,26 +43,32 @@ public class GoalCreate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_goal);
 
+        // This is the code for our custom toolbar
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
-
         ActionBar actionBar = getSupportActionBar();
-
         if (actionBar != null)
             actionBar.setDisplayShowTitleEnabled(false);
 
+
+        // Load views from our activity_goal_create xml
         editTextGoal = findViewById(R.id.editTextGoal);
         editTextDescription = findViewById(R.id.editTextDescription);
         editTextDate = findViewById(R.id.editTextDate);
         timePicker = findViewById(R.id.timePicker);
         timePicker.setIs24HourView(true);
+        Button btnSetGoal = findViewById(R.id.set);
 
+        /* Loads the list data from internal storage
+         * and stores it in our list variable */
         list = data.loadData();
 
+        // By default position will equal the size of the list
         position = list.size();
 
-        // Checks if we are receiving any info on the intent
-        // and if so, populates the fields with the data
+        /* Checks if we are receiving any info on the intent
+         * (if we are editing a goal instead of creating a new goal)
+         * and if so, populates the fields with the data */
         Intent i = getIntent();
         if (i.hasExtra("pos")) {
             position = i.getIntExtra("pos", list.size());
@@ -71,8 +76,6 @@ public class GoalCreate extends AppCompatActivity {
         }
 
         // The Set Goal button saves the info inputted by the user
-        Button btnSetGoal = findViewById(R.id.set);
-
         btnSetGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +86,7 @@ public class GoalCreate extends AppCompatActivity {
                 hour = timePicker.getHour();
                 minute = timePicker.getMinute();
 
+                // Sets the time provided by the user
                 myCalendar.set(Calendar.HOUR_OF_DAY, hour);
                 myCalendar.set(Calendar.MINUTE, minute);
                 myCalendar.set(Calendar.SECOND, 0);
@@ -93,19 +97,18 @@ public class GoalCreate extends AppCompatActivity {
                     am_pm="AM";
                 }
 
-                // Info stored as a string
+                // Get info from the views
                 goal = editTextGoal.getText().toString();
-
                 description = editTextDescription.getText().toString();
-
                 calDate = editTextDate.getText().toString();
-
                 time = hour +":"+ minute+" "+am_pm;
 
-                //Allows the model to access this data
+
+                // Creates a new goal object with the info provided from the user
                 GoalSmasherModel goalData = new GoalSmasherModel(
                         goal, description, calDate, time,
                         true, 0 , myCalendar);
+
 
                 // if position is equal to the size of the list, then we are creating a new goal
                 if (position == list.size()) {
@@ -116,47 +119,45 @@ public class GoalCreate extends AppCompatActivity {
                 data.saveData(list);
 
                 //Toast
-                Context context = getApplicationContext();
-                CharSequence text = "Goal Set!";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                setAlert(myCalendar);
-                toast.show();
-                finish();
+                Toast.makeText(getApplicationContext(), "Goal Set!", Toast.LENGTH_SHORT).show();
+                setAlert(myCalendar); //creates the repeating reminder
+                finish(); // exit this activity
             }
         });
 
+        // Opens a DatePickerDialog when the user clicks to edit the date
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(GoalCreate.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(GoalCreate.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                        myCalendar.set(Calendar.YEAR, year);
+                        myCalendar.set(Calendar.MONTH, month);
+                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateLabel();
+                    }
+                }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
     }
 
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month,
-                              int day) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, month);
-            myCalendar.set(Calendar.DAY_OF_MONTH, day);
-            updateLabel();
-        }
-    };
-
+    // Exit's the activity when the "Back" button is pressed
     public void cancel(View v){
         finish();
     }
 
+    // Updates the text of the date
     private void updateLabel() {
         String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         editTextDate.setText(sdf.format(myCalendar.getTime()));
     }
 
+    /* This method is called when you're editing a goal.
+     * Fills the text fields and sets the time on the
+     * timepicker */
     public void populateFields(int position) {
         GoalSmasherModel goal = list.get(position);
         editTextGoal.setText(goal.getGoal());

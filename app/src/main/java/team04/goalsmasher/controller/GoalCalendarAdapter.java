@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import team04.goalsmasher.R;
 import team04.goalsmasher.model.GoalSmasherModel;
 
+// Custom ListView adapter for our CalendarEvent activity
 public class GoalCalendarAdapter extends BaseAdapter implements ListAdapter {
 
     private ArrayList<GoalSmasherModel> listGoals;
@@ -41,12 +42,15 @@ public class GoalCalendarAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public View getView(final int position, final View convertView, ViewGroup parent) {
         View view = convertView;
+
+        // Inflate our custom list item layout
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.calendar_list_item_layout, null);
         }
 
-        //Handle TextView and display string from your list
+
+        // Get TextView from our layout and set the text to the name of the goal
         TextView viewGoal= view.findViewById(R.id.viewGoal);
         viewGoal.setText((CharSequence) listGoals.get(position).getGoal());
 

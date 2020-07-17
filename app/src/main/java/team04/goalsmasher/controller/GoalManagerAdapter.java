@@ -16,11 +16,12 @@ import team04.goalsmasher.R;
 import team04.goalsmasher.model.GoalSmasherModel;
 import team04.goalsmasher.model.StoreDataModel;
 
+// Custom ListView adapter for our ManageGoalsActivity
 public class GoalManagerAdapter extends BaseAdapter implements ListAdapter {
 
     private ArrayList<GoalSmasherModel> listGoals;
     private Context context;
-    private StoreDataModel storeDataModel;
+    private StoreDataModel data;
     private GoalManager goalManager;
 
     public GoalManagerAdapter(ArrayList<GoalSmasherModel> listGoals, Context context, GoalManager goalManager) {
@@ -47,20 +48,31 @@ public class GoalManagerAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public View getView(final int position, final View convertView, ViewGroup parent) {
         View view = convertView;
+
+        // Inflate our custom list item layout
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.manager_list_item_layout, null);
         }
 
-        storeDataModel = new StoreDataModel(context);
 
-        //Handle TextView and display string from your list
+        // Gets an instance of our StoreData class
+        data = new StoreDataModel(context);
+
+
+        // Get TextView from our layout and set the text to the name of the goal
         TextView viewGoal= view.findViewById(R.id.viewGoal);
         viewGoal.setText((CharSequence) listGoals.get(position).getGoal());
 
+
+        // Get the buttons from our layout so we can set the OnClickListeners
         final Button buttonEdit = view.findViewById(R.id.buttonEdit);
         final Button buttonDelete = view.findViewById(R.id.buttonDelete);
 
+
+        /* When the "Edit" button is clicked, it will start an intent
+         * for our GoalCreate activity and send the specific goal's
+         * position in the intent */
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,11 +82,15 @@ public class GoalManagerAdapter extends BaseAdapter implements ListAdapter {
             }
         });
 
+
+        /* When the "Delete" button is clicked, it removes the specific
+         * goal from the list and saves it to internal storage; then
+         * the list view is updated */
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listGoals.remove(position);
-                storeDataModel.saveData(listGoals);
+                data.saveData(listGoals);
                 goalManager.updateData();
                 notifyDataSetChanged();
             }
@@ -83,6 +99,7 @@ public class GoalManagerAdapter extends BaseAdapter implements ListAdapter {
         return view;
     }
 
+    // This interface is so we can update data in out ManageGoalsActivity
     public interface GoalManager {
         void updateData();
     }

@@ -22,7 +22,7 @@ import team04.goalsmasher.model.StoreDataModel;
 public class ManageGoalsActivity extends AppCompatActivity implements GoalManagerAdapter.GoalManager {
 
     private ArrayList<GoalSmasherModel> goalList = new ArrayList<>();
-    private StoreDataModel storeDataModel;
+    private StoreDataModel data;
     private GoalManagerAdapter goalManagerAdapter;
     private TextView textNoGoals;
 
@@ -31,19 +31,19 @@ public class ManageGoalsActivity extends AppCompatActivity implements GoalManage
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_goals);
 
+        // This is the code for our custom toolbar
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
-
         ActionBar actionBar = getSupportActionBar();
-
         if (actionBar != null)
             actionBar.setDisplayShowTitleEnabled(false);
 
-        storeDataModel = new StoreDataModel(this);
+        data = new StoreDataModel(this);
         textNoGoals = findViewById(R.id.textNoGoals);
 
         refreshList();
 
+        // Get views from our activity_manage_goals layout
         ListView lvGoals = findViewById(R.id.listManageGoals);
         Button buttonCreateGoal = findViewById(R.id.buttonCreateGoal);
         Button buttonDeleteAll = findViewById(R.id.buttonDeleteAll);
@@ -52,6 +52,9 @@ public class ManageGoalsActivity extends AppCompatActivity implements GoalManage
 
         lvGoals.setAdapter(goalManagerAdapter);
 
+        /* When the "Create Goal" button is clicked, it opens the
+        * GoalCreate activity and allows the user to create a new
+        * goal */
         buttonCreateGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +62,9 @@ public class ManageGoalsActivity extends AppCompatActivity implements GoalManage
             }
         });
 
+        /* When the "Delete All" button is clicked, it gives the user
+         * a chance to change their mind with an AlertDialog and if
+         * the user wishes to continue, all goals are deleted */
         buttonDeleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +74,7 @@ public class ManageGoalsActivity extends AppCompatActivity implements GoalManage
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                storeDataModel.clearData();
+                                data.clearData();
                                 refreshList();
                                 goalManagerAdapter.notifyDataSetChanged();
                             }
@@ -85,9 +91,10 @@ public class ManageGoalsActivity extends AppCompatActivity implements GoalManage
         });
     }
 
+    // Clears the goalList and refills it with data from internal storage
     public void refreshList() {
         goalList.clear();
-        goalList.addAll(storeDataModel.loadData());
+        goalList.addAll(data.loadData());
         textNoGoals.setVisibility(goalList.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
@@ -98,6 +105,7 @@ public class ManageGoalsActivity extends AppCompatActivity implements GoalManage
         goalManagerAdapter.notifyDataSetChanged();
     }
 
+    // Method for opening the GoalCreate activity
     public void openGoalCreate() {
         Intent intent = new Intent(this, GoalCreate.class);
         startActivity(intent);
